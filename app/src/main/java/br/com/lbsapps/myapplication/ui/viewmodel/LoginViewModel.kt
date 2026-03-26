@@ -7,35 +7,31 @@ import br.com.lbsapps.myapplication.domain.CredentialsProvider
 class LoginViewModel(
     val credentialsProvider: CredentialsProvider
 ) : ViewModel() {
-    private val _loginState = mutableStateOf(LoginState())
+    private val _loginState = mutableStateOf(LoginState(formStatusMessage = "Please fill login and password"))
     val loginState = _loginState
-
-    init {
-        updateFormStatusMessage()
-    }
 
     fun validateCredentials(user: String, password: String) {
         _loginState.value = _loginState.value.copy(user = user, password = password)
-        updateFormStatusMessage()
+        updateFormStatusMessage(user, password)
         _loginState.value = _loginState.value.copy(loading = true)
         val isLoginValid = credentialsProvider.validateCredential(user, password)
         _loginState.value = _loginState.value.copy(loggedIn = isLoginValid)
         if (!isLoginValid) {
-            _loginState.value = _loginState.value.copy(error = "Wrong Credentials")
+            _loginState.value = _loginState.value.copy(formStatusMessage = "Wrong Credentials")
         } else {
             _loginState.value = _loginState.value.copy(loggedIn = true)
         }
         _loginState.value = _loginState.value.copy(loading = false)
     }
 
-    private fun updateFormStatusMessage() {
+    fun updateFormStatusMessage(user: String, password: String) {
         var message = ""
 
-        if (_loginState.value.password.isEmpty()) {
+        if (password.isEmpty()) {
             message += "\nPassword is empty"
         }
 
-        if (_loginState.value.user.isEmpty()) {
+        if (user.isEmpty()) {
             message += "\nUser is empty"
         }
 
@@ -44,7 +40,6 @@ class LoginViewModel(
 }
 
 data class LoginState(
-    val error: String? = null,
     val loading: Boolean = false,
     val loggedIn: Boolean = false,
     val password: String = "",

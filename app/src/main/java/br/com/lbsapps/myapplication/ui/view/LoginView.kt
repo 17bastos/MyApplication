@@ -36,6 +36,7 @@ fun LoginView(
                 value = user.value,
                 onValueChange = { value ->
                     user.value = value
+                    viewModel.updateFormStatusMessage(user.value, password.value)
                 },
             )
 
@@ -47,6 +48,7 @@ fun LoginView(
                 value = password.value,
                 onValueChange = { value ->
                     password.value = value
+                    viewModel.updateFormStatusMessage(user.value, password.value)
                 },
             )
             Text(

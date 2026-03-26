@@ -26,7 +26,6 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             MyApplicationTheme {
-                val state = remember { loginViewModel.loginState }
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     LoginView(LoginViewModel(CredentialsRepository()))
                 }
