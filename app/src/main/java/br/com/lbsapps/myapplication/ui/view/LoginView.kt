@@ -17,7 +17,7 @@ fun LoginView(
 ) {
     val state = viewModel.loginState
     Column(
-        modifier = Modifier.padding(25.dp)
+        modifier = Modifier.padding(80.dp)
     ) {
         Text("Type the user")
         TextField(

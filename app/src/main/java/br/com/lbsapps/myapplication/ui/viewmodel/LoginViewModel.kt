@@ -10,6 +10,10 @@ class LoginViewModel(
     private val _loginState = mutableStateOf(LoginState())
     val loginState = _loginState
 
+    init {
+        updateFormStatusMessage()
+    }
+
     fun validateCredentials() {
         val user = _loginState.value.user
         val password = _loginState.value.password
