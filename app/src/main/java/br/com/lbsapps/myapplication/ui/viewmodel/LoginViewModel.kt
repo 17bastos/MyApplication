@@ -22,6 +22,8 @@ class LoginViewModel(
         _loginState.value = _loginState.value.copy(loggedIn = isLoginValid)
         if (!isLoginValid) {
             _loginState.value = _loginState.value.copy(error = "Wrong Credentials")
+        } else {
+            _loginState.value = _loginState.value.copy(loggedIn = true)
         }
         _loginState.value = _loginState.value.copy(loading = false)
     }
