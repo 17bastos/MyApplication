@@ -28,13 +28,7 @@ class MainActivity : ComponentActivity() {
             MyApplicationTheme {
                 val state = remember { loginViewModel.loginState }
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    if (loginViewModel.loginState.value.loggedIn) {
-                        Column(modifier = Modifier.padding(80.dp)) {
-                            Text("WELCOME!!!")
-                        }
-                    } else {
-                        LoginView(LoginViewModel(CredentialsRepository()))
-                    }
+                    LoginView(LoginViewModel(CredentialsRepository()))
                 }
             }
         }
