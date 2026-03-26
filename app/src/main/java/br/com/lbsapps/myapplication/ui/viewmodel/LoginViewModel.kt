@@ -14,9 +14,9 @@ class LoginViewModel(
         updateFormStatusMessage()
     }
 
-    fun validateCredentials() {
-        val user = _loginState.value.user
-        val password = _loginState.value.password
+    fun validateCredentials(user: String, password: String) {
+        _loginState.value = _loginState.value.copy(user = user, password = password)
+        updateFormStatusMessage()
         _loginState.value = _loginState.value.copy(loading = true)
         val isLoginValid = credentialsProvider.validateCredential(user, password)
         _loginState.value = _loginState.value.copy(loggedIn = isLoginValid)
@@ -24,16 +24,6 @@ class LoginViewModel(
             _loginState.value = _loginState.value.copy(error = "Wrong Credentials")
         }
         _loginState.value = _loginState.value.copy(loading = false)
-    }
-
-    fun onPasswordChanges(password: String) {
-        _loginState.value = _loginState.value.copy(password = password)
-        updateFormStatusMessage()
-    }
-
-    fun onUserChanges(user: String) {
-        _loginState.value = _loginState.value.copy(user = user)
-        updateFormStatusMessage()
     }
 
     private fun updateFormStatusMessage() {

@@ -7,6 +7,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -17,13 +18,17 @@ fun LoginView(
     viewModel: LoginViewModel
 ) {
     val state = remember { viewModel.loginState }
+    val user = remember { mutableStateOf("") }
+    val password = remember { mutableStateOf("") }
     Column(
         modifier = Modifier.padding(80.dp)
     ) {
         Text("Type the user")
         TextField(
-            value = state.value.user,
-            onValueChange = viewModel::onUserChanges,
+            value = user.value,
+            onValueChange = { value ->
+                user.value = value
+            },
         )
 
         Text(
@@ -31,8 +36,10 @@ fun LoginView(
             text = "Type the password"
         )
         TextField(
-            value = state.value.password,
-            onValueChange = viewModel::onPasswordChanges,
+            value = password.value,
+            onValueChange = { value ->
+                password.value = value
+            },
         )
         Text(
             modifier = Modifier.padding(top = 5.dp),
@@ -40,7 +47,9 @@ fun LoginView(
         )
         Button(
             modifier = Modifier.padding(top = 20.dp),
-            onClick = viewModel::validateCredentials
+            onClick = {
+                viewModel.validateCredentials(user.value, password.value)
+            }
         ) {
             Text("Do Login")
         }
